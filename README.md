@@ -1,12 +1,20 @@
 # Flask-SQLAlchemy-Workout-Application-Backend
-*Project Description*
-A robust REST API backend for a workout tracking application used by personal trainers. This API allows trainers to create and manage workouts and exercises, with the ability to add multiple exercises to each workout (including sets, reps, or duration). The system features reusable exercises that can be added to various workouts, comprehensive data validation at multiple levels, and full CRUD operations for core resources.
+# Project Description #
 
-Built with Flask, SQLAlchemy, and Marshmallow, this application demonstrates professional backend architecture including model relationships, database constraints, validation layers, and RESTful endpoint design.
 
-*Technologies Used*
+A robust REST API backend for a workout tracking application used by personal trainers. 
+This API allows trainers to create and manage workouts and exercises, with the ability to add multiple exercises to each workout (including sets, reps, or duration). 
+The system features reusable exercises that can be added to various workouts, comprehensive data validation at multiple levels, and full CRUD operations for core resources.
+
+Built with:
+Flask, 
+SQLAlchemy,
+and Marshmallow, 
+this application demonstrates professional backend architecture including model relationships, database constraints, validation layers, and RESTful endpoint design.
+
+# Technologies Used #
+
 Python 3.8.13+
-
 Flask 2.2.2
 
 Flask-SQLAlchemy 3.0.3
@@ -19,7 +27,8 @@ SQLite (development) / PostgreSQL (production)
 
 Pipenv for dependency management
 
-Features
+ # Features
+ 
 Create, view, and delete workouts
 
 Create, view, and delete exercises
@@ -40,7 +49,8 @@ Seed data for testing and demonstration
 
 Proper serialization/deserialization with Marshmallow
 
-Installation Instructions
+# Installation Instructions
+
 Prerequisites
 Python 3.8.13 or higher
 
@@ -49,29 +59,28 @@ Pipenv (install with pip install pipenv)
 Git
 
 Step 1: Clone the Repository
-bash
+`` bash ``
 git clone <your-repository-url>
 cd Flask-SQLAlchemy-Workout-Application-Backend
+
 Step 2: Install Dependencies
 Using Pipenv (recommended):
 
-bash
+`` bash``
 pipenv install
 pipenv shell
+
+
 Or using pip with requirements.txt:
 
-bash
+`` bash``
 pip install -r requirements.txt
-Step 3: Set Up Environment Variables
-Create a .env file in the root directory:
 
-env
-FLASK_APP=app.py
-FLASK_ENV=development
-SECRET_KEY=your-secret-key-here-change-in-production
-DATABASE_URL=sqlite:///workout.db
-Step 4: Initialize the Database
-bash
+
+
+Step 3: Initialize the Database
+`` bash``
+
 # Initialize migrations folder (first time only)
 flask db init
 
@@ -80,27 +89,29 @@ flask db migrate -m "Initial migration"
 
 # Apply migrations to database
 flask db upgrade
-Step 5: Seed the Database with Sample Data
-bash
+
+Step 4: Seed the Database with Sample Data
+``bash``
 python seed.py
 This will populate your database with sample workouts, exercises, and relationships for testing.
 
-Run Instructions
+# Run Instructions
 Development Server
-bash
+`` bash ``
 flask run
 The server will start at http://127.0.0.1:5000
 
 Alternative Method
-bash
+`` bash ``
 python app.py
 Production (using gunicorn)
-bash
+
+`` bash ``
 gunicorn -w 4 -b 0.0.0.0:8000 "app:create_app()"
 API Endpoints
 The API base URL is /api
 
-Workout Endpoints
+# Workout Endpoints
 Method	Endpoint	Description	Request Body Example
 GET	/workouts	Retrieve all workouts	-
 GET	/workouts/<id>	Retrieve a specific workout by ID	-
@@ -155,7 +166,8 @@ json
   "difficulty": "Advanced",
   "created_at": "2024-01-20T14:15:00"
 }
-Validation Rules
+
+# Validation Rules
 The API enforces the following validations:
 
 Database Constraints
@@ -186,12 +198,12 @@ Custom validators for difficulty levels and muscle groups
 Testing
 Run the test suite (if implemented):
 
-bash
+``bash``
 pytest tests/
 
 Or test individual endpoints using the Flask shell:
 
-bash
+``bash``
 flask shell
 >>> from app.models import Workout, Exercise
 >>> Workout.query.all()
@@ -214,7 +226,7 @@ Issue: Validation errors when creating/updating data
 
 Solution: Check the error response for specific validation messages
 
-Development Notes
+# Development Notes
 This application uses a many-to-many relationship between workouts and exercises
 
 No update endpoints are implemented per project requirements
@@ -223,7 +235,7 @@ Exercises can be reused across multiple workouts
 
 Each workout-exercise association can include custom sets, reps, or duration
 
-Future Enhancements
+# Future Enhancements
 User authentication and authorization
 
 Workout completion tracking
@@ -235,19 +247,18 @@ Exercise video/image uploads
 Mobile app integration
 
 
-Contributors
+# Contributors #
 SANDRA NAFULA
 
-Acknowledgments
+# Acknowledgments
 Flask and SQLAlchemy documentation
 
 Course instructors and curriculum designers
 
 Repository Structure:
 
-text
 Flask-SQLAlchemy-Workout-Application-Backend/
-├── app/
+├── server/
 │   ├── __init__.py
 │   ├── models.py
 │   ├── schemas.py
@@ -258,7 +269,6 @@ Flask-SQLAlchemy-Workout-Application-Backend/
 ├── app.py
 ├── requirements.txt
 ├── Pipfile
-├── .env
 └── README.md
 
 ## API Endpoints
