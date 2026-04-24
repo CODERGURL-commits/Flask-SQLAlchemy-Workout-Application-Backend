@@ -1,10 +1,10 @@
 # Flask-SQLAlchemy-Workout-Application-Backend
-Project Description
+*Project Description*
 A robust REST API backend for a workout tracking application used by personal trainers. This API allows trainers to create and manage workouts and exercises, with the ability to add multiple exercises to each workout (including sets, reps, or duration). The system features reusable exercises that can be added to various workouts, comprehensive data validation at multiple levels, and full CRUD operations for core resources.
 
 Built with Flask, SQLAlchemy, and Marshmallow, this application demonstrates professional backend architecture including model relationships, database constraints, validation layers, and RESTful endpoint design.
 
-Technologies Used
+*Technologies Used*
 Python 3.8.13+
 
 Flask 2.2.2
