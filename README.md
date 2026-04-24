@@ -29,19 +29,19 @@ Pipenv for dependency management
 
  # Features
  
-Create, view, and delete workouts
+* Create, view, and delete workouts *
 
-Create, view, and delete exercises
+* Create, view, and delete exercises *
 
-Add exercises to workouts (many-to-many relationship)
+* Add exercises to workouts (many-to-many relationship) *
 
-Three layers of validation:
+# Three layers of validation:
 
-Database table constraints (UNIQUE, CHECK constraints)
+* Database table constraints (UNIQUE, CHECK constraints) *
 
-SQLAlchemy model validations
+* SQLAlchemy model validations *
 
-Marshmallow schema validations
+* Marshmallow schema validations *
 
 RESTful API endpoints following conventions
 
@@ -113,21 +113,32 @@ The API base URL is /api
 
 # Workout Endpoints
 Method	Endpoint	Description	Request Body Example
-GET	/workouts	Retrieve all workouts	-
-GET	/workouts/<id>	Retrieve a specific workout by ID	-
+
+GET	/workouts	Retrieve all workouts	
+
+GET	/workouts/<id>	Retrieve a specific workout by ID	
+
 POST	/workouts	Create a new workout	{"name": "Morning Routine", "duration_minutes": 45, "difficulty": "Intermediate"}
-DELETE	/workouts/<id>	Delete a workout	-
+
+DELETE	/workouts/<id>	Delete a workout	
+
 POST	/workouts/<workout_id>/exercises/<exercise_id>	Add an exercise to a workout (with sets/reps/duration)	{"sets": 3, "reps": 12} or {"duration_seconds": 60}
-Exercise Endpoints
+
+# Exercise Endpoints
 Method	Endpoint	Description	Request Body Example
-GET	/exercises	Retrieve all exercises	-
-GET	/exercises/<id>	Retrieve a specific exercise by ID	-
+
+GET	/exercises	Retrieve all exercises	
+
+GET	/exercises/<id>	Retrieve a specific exercise by ID	
+
 POST	/exercises	Create a new exercise	{"name": "Push Up", "muscle_group": "Chest", "calories_per_minute": 7.5}
-DELETE	/exercises/<id>	Delete an exercise	-
-Sample API Responses
+
+DELETE	/exercises/<id>	Delete an exercise
+
+# Sample API Responses
 GET /api/workouts - Returns all workouts with their associated exercises:
 
-json
+``` json
 {
   "workouts": [
     {
@@ -165,8 +176,8 @@ json
   "duration_minutes": 60,
   "difficulty": "Advanced",
   "created_at": "2024-01-20T14:15:00"
-}
-
+} 
+```
 # Validation Rules
 The API enforces the following validations:
 
@@ -259,17 +270,21 @@ Repository Structure:
 
 Flask-SQLAlchemy-Workout-Application-Backend/
 ├── server/
-│   ├── __init__.py
-│   ├── models.py
-│   ├── schemas.py
-│   ├── routes.py
-├── migrations/
-├── seed.py
-├── config.py
 ├── app.py
-├── requirements.txt
-├── Pipfile
-└── README.md
+├── extensions.py
+├── instance
+│   └── app.db
+├── migrations
+│   ├── alembic.ini
+│   ├── env.py
+│   ├── README
+│   ├── script.py.mako
+│   └── versions
+│       └── 74a83b433abf_initial_schema.py
+├── models.py
+├── schemas.py
+└── seed.py
+
 
 ## API Endpoints
 
