@@ -1,298 +1,103 @@
-# Flask-SQLAlchemy-Workout-Application-Backend
-# Project Description #
+# Workout Tracker API
 
+A professional backend API built with Flask, SQLAlchemy, and Marshmallow. 
+This application allows personal trainers to manage workouts and reusable exercises. It demonstrates advanced database relationships, multi-layer data validation, and automated serialization.
 
-A robust REST API backend for a workout tracking application used by personal trainers. 
-This API allows trainers to create and manage workouts and exercises, with the ability to add multiple exercises to each workout (including sets, reps, or duration). 
-The system features reusable exercises that can be added to various workouts, comprehensive data validation at multiple levels, and full CRUD operations for core resources.
+# Features
+## Relational Database: 
+Many-to-Many relationship between Workouts and Exercises using a WorkoutExercise association table.
 
-Built with:
-Flask, 
-SQLAlchemy,
-and Marshmallow, 
-this application demonstrates professional backend architecture including model relationships, database constraints, validation layers, and RESTful endpoint design.
+## Triple-Layer Validation:Table Constraints:
+nullable=False, unique=True, and CheckConstraints.
 
-# Technologies Used #
+## Model Validations: 
+Using SQLAlchemy @validates for business logic.
 
-Python 3.8.13+
-Flask 2.2.2
+## Schema Validations:
+Using Marshmallow validate for request integrity.
 
-Flask-SQLAlchemy 3.0.3
+## RESTful Endpoints:
+Clean API design for creating, viewing, and linking resources.
 
-Flask-Migrate 3.1.0
+Seeded Data: Pre-populated database for immediate testing.
 
-Marshmallow 3.20.1
+# Step-by-Step Installation 
 
-SQLite (development) / PostgreSQL (production)
+Follow these instructions exactly to set up your development environment from scratch.
 
-Pipenv for dependency management
+# 1. Prerequisites
+ Ensure you have Python 3.8.13+ installed.
+ You will also need Pipenv.
+ To check Python version: ```python --version``` To install Pipenv: ```run pipenv install```
+# 2. Clone the Repository 
+Open your terminal and clone your project:```Bash git clone <your-github-repo-url>
+cd workout-tracker-backend```
 
- # Features
+ # Install Dependencies
+ Install all required packages (Flask, SQLAlchemy, Marshmallow, etc.) as specified in the Pipfile: ```Bash pipenv install <list of all dependencies required>```
+ *  Activate the Virtual Environment:
+```Bash pipenv shell``` for MacOS/linux
+```venv\Scripts\activate```on windows
+
+ # Initialize the Database
+ Set up your SQLite database and generate the tables using Flask-Migrate: ```Bash# Initialize the migration folder
+flask db init```
+
+# Create the initial migration script
+```flask db migrate -m "Initial migration"```
+
+# Apply the migration to create 'instance/app.db'
+```flask db upgrade```
+# Seed the Database
+ Populate the database with sample data (trainers, exercises, and workouts) so the API isn't empty: ```Bash python seed.py```
  
-* Create, view, and delete workouts *
+# Launch the API
+   Start the Flask development server: ```Bash flask run```
+The API will now be running at http://127.0.0.1:5000.
 
-* Create, view, and delete exercises *
+# API Endpoints 
 
-* Add exercises to workouts (many-to-many relationship) *
-
-# Three layers of validation:
-
-* Database table constraints (UNIQUE, CHECK constraints) *
-
-* SQLAlchemy model validations *
-
-* Marshmallow schema validations *
-
-RESTful API endpoints following conventions
-
-Seed data for testing and demonstration
-
-Proper serialization/deserialization with Marshmallow
-
-# Installation Instructions
-
-Prerequisites
-Python 3.8.13 or higher
-
-Pipenv (install with pip install pipenv)
-
-Git
-
-Step 1: Clone the Repository
-`` bash ``
-git clone <your-repository-url>
-cd Flask-SQLAlchemy-Workout-Application-Backend
-
-Step 2: Install Dependencies
-Using Pipenv (recommended):
-
-`` bash``
-pipenv install
-pipenv shell
-
-
-Or using pip with requirements.txt:
-
-`` bash``
-pip install -r requirements.txt
-
-
-
-Step 3: Initialize the Database
-`` bash``
-
-# Initialize migrations folder (first time only)
-flask db init
-
-# Create migration script
-flask db migrate -m "Initial migration"
-
-# Apply migrations to database
-flask db upgrade
-
-Step 4: Seed the Database with Sample Data
-``bash``
-python seed.py
-This will populate your database with sample workouts, exercises, and relationships for testing.
-
-# Run Instructions
-Development Server
-`` bash ``
-flask run
-The server will start at http://127.0.0.1:5000
-
-Alternative Method
-`` bash ``
-python app.py
-Production (using gunicorn)
-
-`` bash ``
-gunicorn -w 4 -b 0.0.0.0:8000 "app:create_app()"
-API Endpoints
-The API base URL is /api
+Method,Endpoint,Description
+GET,/workouts,Retrieve all workouts with associated exercises.
+GET,/workouts/<id>,Retrieve a specific workout by ID.
+POST,/workouts,"Create a new workout (requires title, trainer_id)."
+DELETE,/workouts/<id>,Remove a workout.
 
 # Workout Endpoints
-Method	Endpoint	Description	Request Body Example
 
-GET	/workouts	Retrieve all workouts	
+Method,Endpoint,Description
+GET,/exercises,List all available reusable exercises.
+POST,/exercises,Create a new exercise (requires name).
+DELETE,/exercises/<id>,Delete an exercise.
 
-GET	/workouts/<id>	Retrieve a specific workout by ID	
+# Validation & Constraints
+This project implements three levels of protection to ensure data integrity:
 
-POST	/workouts	Create a new workout	{"name": "Morning Routine", "duration_minutes": 45, "difficulty": "Intermediate"}
+``Table Constraints``: Database-level checks like unique=True for exercise names and CheckConstraint to ensure reps/sets are greater than 0.
 
-DELETE	/workouts/<id>	Delete a workout	
+``Model Validations``: Using @validates in SQLAlchemy to enforce business rules (e.g., workout titles must be at least 3 characters).
 
-POST	/workouts/<workout_id>/exercises/<exercise_id>	Add an exercise to a workout (with sets/reps/duration)	{"sets": 3, "reps": 12} or {"duration_seconds": 60}
+``Schema Validations``: Marshmallow schemas validate incoming JSON data types and required fields before they even touch the database.
 
-# Exercise Endpoints
-Method	Endpoint	Description	Request Body Example
+# Project Structure
+``app.py``: Application entry point and API routes.
 
-GET	/exercises	Retrieve all exercises	
+``models.py``: SQLAlchemy models and relationship definitions.
 
-GET	/exercises/<id>	Retrieve a specific exercise by ID	
+``schemas.py``: Marshmallow schemas for serialization and validation.
 
-POST	/exercises	Create a new exercise	{"name": "Push Up", "muscle_group": "Chest", "calories_per_minute": 7.5}
+``seed.py``: Script to populate the database with initial data.
 
-DELETE	/exercises/<id>	Delete an exercise
+``Pipfile``: List of dependencies and Python version requirements.
 
-# Sample API Responses
-GET /api/workouts - Returns all workouts with their associated exercises:
+#  Testing the API
+You can test the endpoints using:
 
-``` json
-{
-  "workouts": [
-    {
-      "id": 1,
-      "name": "Upper Body Strength",
-      "duration_minutes": 45,
-      "difficulty": "Intermediate",
-      "created_at": "2024-01-15T10:30:00",
-      "exercises": [
-        {
-          "id": 1,
-          "name": "Push Up",
-          "muscle_group": "Chest",
-          "sets": 3,
-          "reps": 12
-        }
-      ]
-    }
-  ]
-}
-POST /api/workouts - Create a new workout:
+``Postman or Insomnia (Recommended for POST/DELETE).``
 
-json
-// Request
-{
-  "name": "Leg Day",
-  "duration_minutes": 60,
-  "difficulty": "Advanced"
-}
+``cURL via the terminal.``
 
-// Response (201 Created)
-{
-  "id": 4,
-  "name": "Leg Day",
-  "duration_minutes": 60,
-  "difficulty": "Advanced",
-  "created_at": "2024-01-20T14:15:00"
-} 
-```
-# Validation Rules
-The API enforces the following validations:
-
-Database Constraints
-Workout names must be unique
-
-Exercise names must be unique
-
-Difficulty levels limited to: Beginner, Intermediate, Advanced
-
-Duration must be positive (CHECK constraint)
-
-Model Validations
-Workout name cannot be empty or contain only whitespace
-
-Duration minutes must be between 1 and 300
-
-Exercise name must be at least 3 characters
-
-Calories per minute must be positive
-
-Schema Validations
-Required fields validation (name, duration, etc.)
-
-Data type validation
-
-Custom validators for difficulty levels and muscle groups
-
-Testing
-Run the test suite (if implemented):
-
-``bash``
-pytest tests/
-
-Or test individual endpoints using the Flask shell:
-
-``bash``
-flask shell
->>> from app.models import Workout, Exercise
->>> Workout.query.all()
->>> Exercise.query.filter_by(muscle_group="Chest").all()
-Troubleshooting
-Common Issues
-Issue: ModuleNotFoundError: No module named 'flask'
-
-Solution: Run pipenv install or pip install -r requirements.txt
-
-Issue: Database not found or tables missing
-
-Solution: Run flask db upgrade followed by python seed.py
-
-Issue: Port 5000 already in use
-
-Solution: Use a different port: flask run --port=5001
-
-Issue: Validation errors when creating/updating data
-
-Solution: Check the error response for specific validation messages
-
-# Development Notes
-This application uses a many-to-many relationship between workouts and exercises
-
-No update endpoints are implemented per project requirements
-
-Exercises can be reused across multiple workouts
-
-Each workout-exercise association can include custom sets, reps, or duration
-
-# Future Enhancements
-User authentication and authorization
-
-Workout completion tracking
-
-Progress statistics and analytics
-
-Exercise video/image uploads
-
-Mobile app integration
-
-
-# Contributors #
-SANDRA NAFULA
-
-# Acknowledgments
-Flask and SQLAlchemy documentation
-
-Course instructors and curriculum designers
-
-Repository Structure:
-
-Flask-SQLAlchemy-Workout-Application-Backend/
-├── server/
-├── app.py
-├── extensions.py
-├── instance
-│   └── app.db
-├── migrations
-│   ├── alembic.ini
-│   ├── env.py
-│   ├── README
-│   ├── script.py.mako
-│   └── versions
-│       └── 74a83b433abf_initial_schema.py
-├── models.py
-├── schemas.py
-└── seed.py
-
-
-## API Endpoints
-
-- `GET /api/users` - Retrieve all users
-- `POST /api/users` - Create a new user
-- `GET /api/workouts` - Retrieve workouts
-- `POST /api/workouts` - Create a new workout
-- `GET /api/exercises` - Retrieve exercises
+``SQLite Viewer (VS Code extension) to see the data inside app.db.``
 
 ## License
 
